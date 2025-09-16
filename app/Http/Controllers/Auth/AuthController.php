@@ -37,4 +37,37 @@ class AuthController extends Controller
 
         return redirect()->route('newhome')->with('success', 'You are logged in '. $user->name);
     }
+
+    public function showLogin() {
+        return view('auth.login');
+    }
+
+    public function login(Request $request) {
+        $creds = $request->validate([
+            'dzName' => ['required', 'string', 'exists:users,username'],
+            'dzPassword' => ['required', 'string', 'min:8'],
+        ]);
+
+        $credentials = [
+            'username' => $creds['dzName'],
+            'password' => $creds['dzPassword'],
+        ];
+
+
+        if(Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('myhome'));
+        }
+
+        return back()->withErrors(['dzName' => __('The provided credentials do not match our records.')])->withInput($request->only('dzName'));
+
+    }
+
+    public function destroy() {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('myhome');
+    }
 }

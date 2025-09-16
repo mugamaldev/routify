@@ -9,9 +9,13 @@ use App\Http\Controllers\HomepageController;
 // });
 
 
-Route::get('/', [HomepageController::class, 'index']);
-Route::get('register', [AuthController::class, 'showRegist']);
+Route::get('/', [HomepageController::class, 'index'])->name('myhome');
+Route::get('login', [AuthController::class, 'showLogin']);
+Route::post('login', [AuthController::class, 'login'])->name('users.login');
+Route::get('register', [AuthController::class, 'showRegist'])->name('regist');
 Route::post('register', [AuthController::class, 'register'])->name('users.regist');
 Route::get('courses', function() {
     return view('new');
 })->name('newhome');
+
+Route::post('logout', [AuthController::class, 'destroy'])->name('users.logout');

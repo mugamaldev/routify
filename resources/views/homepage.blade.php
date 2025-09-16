@@ -78,7 +78,12 @@
 							</li>
 							@if($user)
 							<li><a href="login.html" style="mt-1">{{ $user->name }}</a></li>
-							<li><a href="login.html" class="btn radius-xl" style="mt-1;padding: 5px 15px 5px 15px;">Log out</a></li>
+							<li>
+								<form method="post" action="{{ route('users.logout') }}">
+									@csrf
+								<button type="submit" value="submit" class="btn radius-xl" style="mt-1;padding: 5px 15px 5px 15px;">Log out</button>
+								</form>
+							</li>
 							@else
 							<li><a href="login.html">Login</a></li>
 							<li><a href="register.html">Register</a></li>
