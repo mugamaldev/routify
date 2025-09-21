@@ -85,8 +85,8 @@
 								</form>
 							</li>
 							@else
-							<li><a href="login.html">Login</a></li>
-							<li><a href="register.html">Register</a></li>
+							<li><a href="{{ route('login') }}">Login</a></li>
+							<li><a href="{{ route('regist') }}">Register</a></li>
 							@endif
 						</ul>
 					</div>

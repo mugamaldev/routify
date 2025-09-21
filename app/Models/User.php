@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\UserRole;
+use App\Models\Review;
 
 
 class User extends Authenticatable
@@ -63,4 +64,9 @@ class User extends Authenticatable
     public function enrolledCourses() :BelongsToMany {
         return $this->belongsToMany(Course::class, 'enrollment')->withTimeStamps();
     }
+
+    public function reviews(): HasMany
+{
+    return $this->hasMany(Review::class);
+}
 }

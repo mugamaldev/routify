@@ -35,7 +35,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('newhome')->with('success', 'You are logged in '. $user->name);
+        return redirect()->route('myhome')->with('success', 'You are logged in '. $user->name);
     }
 
     public function showLogin() {

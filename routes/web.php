@@ -10,7 +10,7 @@ use App\Http\Controllers\HomepageController;
 
 
 Route::get('/', [HomepageController::class, 'index'])->name('myhome');
-Route::get('login', [AuthController::class, 'showLogin']);
+Route::get('login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('users.login');
 Route::get('register', [AuthController::class, 'showRegist'])->name('regist');
 Route::post('register', [AuthController::class, 'register'])->name('users.regist');
