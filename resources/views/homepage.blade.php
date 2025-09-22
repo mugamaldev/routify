@@ -625,118 +625,47 @@
 					</div>
 					<div class="row">
 					<div class="courses-carousel owl-carousel owl-btn-1 col-12 p-lr0">
-						<div class="item">
-							<div class="cours-bx">
-								<div class="action-box">
-									<img src="assets/images/courses/pic1.jpg" alt="">
-									<a href="#" class="btn">Read More</a>
-								</div>
-								<div class="info-bx text-center">
-									<h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
-									<span>Programming</span>
-								</div>
-								<div class="cours-more-info">
-									<div class="review">
-										<span>3 Review</span>
-										<ul class="cours-star">
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-										</ul>
+						{{-- Start Course loop  --}}
+						@foreach($courses as $course)
+							<div class="item">
+								<div class="cours-bx">
+									<div class="action-box">
+										<img src="assets/images/courses/pic1.jpg" alt="">
+										<a href="#" class="btn">Read More</a>
 									</div>
-									<div class="price">
-										<del>$190</del>
-										<h5>$120</h5>
+									<div class="info-bx text-center">
+										<h5><a href="#">{{$course->title}}</a></h5>
+										<span>{{$course->category->name}}</span>
 									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="cours-bx">
-								<div class="action-box">
-									<img src="assets/images/courses/pic2.jpg" alt="">
-									<a href="#" class="btn">Read More</a>
-								</div>
-								<div class="info-bx text-center">
-									<h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
-									<span>Programming</span>
-								</div>
-								<div class="cours-more-info">
-									<div class="review">
-										<span>3 Review</span>
-										<ul class="cours-star">
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-										</ul>
-									</div>
-									<div class="price">
-										<del>$190</del>
-										<h5>$120</h5>
+									<div class="cours-more-info">
+										<div class="review">
+											<span>
+												{{ $course->reviews_count }} 
+												Review{{ $course->reviews_count == 1 ? '' : 's' }}
+											</span>
+
+											@php
+												// نجيب المتوسط ونقربه لأقرب رقم عشري أو صحيح
+												$avgRating = round($course->reviews_avg_rating, 1); // ممكن تستخدم floor أو ceil حسب ذوقك
+											@endphp
+
+											<ul class="cours-star">
+												@for ($i = 1; $i <= 5; $i++)
+													<li class="{{ $i <= $avgRating ? 'active' : '' }}">
+														<i class="fa fa-star"></i>
+													</li>
+												@endfor
+											</ul>
+										</div>
+										<div class="price">
+											<del>{{$course->price}}</del>
+											<h5>{{$course->sale_price}}</h5>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="item">
-							<div class="cours-bx">
-								<div class="action-box">
-									<img src="assets/images/courses/pic3.jpg" alt="">
-									<a href="#" class="btn">Read More</a>
-								</div>
-								<div class="info-bx text-center">
-									<h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
-									<span>Programming</span>
-								</div>
-								<div class="cours-more-info">
-									<div class="review">
-										<span>3 Review</span>
-										<ul class="cours-star">
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-										</ul>
-									</div>
-									<div class="price">
-										<del>$190</del>
-										<h5>$120</h5>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="cours-bx">
-								<div class="action-box">
-									<img src="assets/images/courses/pic4.jpg" alt="">
-									<a href="#" class="btn">Read More</a>
-								</div>
-								<div class="info-bx text-center">
-									<h5><a href="#">Introduction EduChamp – LMS plugin</a></h5>
-									<span>Programming</span>
-								</div>
-								<div class="cours-more-info">
-									<div class="review">
-										<span>3 Review</span>
-										<ul class="cours-star">
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li class="active"><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-											<li><i class="fa fa-star"></i></li>
-										</ul>
-									</div>
-									<div class="price">
-										<del>$190</del>
-										<h5>$120</h5>
-									</div>
-								</div>
-							</div>
-						</div>
+						@endforeach
+						{{-- End Course loop  --}}
 					</div>
 					</div>
 				</div>

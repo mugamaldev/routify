@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('course_image');
-            $table->string('course_video')->nullable();
-            $table->integer('duration');
             $table->text('course_description');
+            $table->integer('duration')->default(0); // إجمالي المدة
             $table->decimal('price', 10, 2);
             $table->decimal('sale_price', 10, 2)->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
