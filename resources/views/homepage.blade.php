@@ -658,8 +658,8 @@
 											</ul>
 										</div>
 										<div class="price">
-											<del>{{$course->price}}</del>
-											<h5>{{$course->sale_price}}</h5>
+											<del>{{$course->price}} EGP</del>
+											<h5>{{$course->sale_price}} EGP</h5>
 										</div>
 									</div>
 								</div>
