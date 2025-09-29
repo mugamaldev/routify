@@ -50,11 +50,24 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'role' => UserRole::class, // أي قيمة في العمود role هتتعمل cast تلقائيًا للـ Enum
+            'role' => UserRole::class,
         ];
     }
 
+    // helper بسيط
+    public function hasRole(UserRole|string $role): bool
+    {
+        if ($role instanceof UserRole) $role = $role->value;
+        if ($this->role instanceof UserRole) {
+            return $this->role->value === $role;
+        }
+        return $this->role == $role;
+    }
 
+    public function isAdmin(): bool { return $this->hasRole(UserRole::ADMIN); }
+    public function isInstructor(): bool { return $this->hasRole(UserRole::INSTRUCTOR); }
+
+    
     public function courses() :HasMany {
         return $this->hasMany(Course::class, 'instructor_id');
     }

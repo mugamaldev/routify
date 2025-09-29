@@ -19,3 +19,7 @@ Route::get('courses', function() {
 })->name('newhome');
 
 Route::post('logout', [AuthController::class, 'destroy'])->name('users.logout');
+
+Route::get('/dashboard', function () {
+  return view('instructor.dashboard');
+})->middleware('role:admin, instructor');
