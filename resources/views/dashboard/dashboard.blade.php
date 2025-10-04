@@ -362,7 +362,7 @@
 									<div class="form-group col-6">
 										<label class="col-form-label">Full Name</label>
 										<div>
-											<input class="form-control" type="text" value="Mark Andre">
+											<input class="form-control" type="text" value="{{$user->name}}">
 										</div>
 									</div>
 									<div class="form-group col-6">

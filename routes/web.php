@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomepageController;
-
+use App\Http\Controllers\Dashboard\DashboardController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -20,6 +20,4 @@ Route::get('courses', function() {
 
 Route::post('logout', [AuthController::class, 'destroy'])->name('users.logout');
 
-Route::get('/dashboard', function () {
-  return view('instructor.dashboard');
-})->middleware('role:admin, instructor');
+Route::get('/dashboard', [DashboardController::class, 'index']);/*->middleware('role:admin, instructor');*/
