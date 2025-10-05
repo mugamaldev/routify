@@ -80,4 +80,14 @@ class User extends Authenticatable
 {
     return $this->hasMany(Review::class);
 }
+    public function profile() {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    protected static function boot() {
+        parent::boot();
+        static::created(function ($user) {
+            $user->profile()->create();
+        });
+    }
 }
