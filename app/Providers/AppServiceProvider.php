@@ -6,7 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\CourseVideo;
 use App\Observers\CourseVideoObserver;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Observers\UserObserver;
+use App\Observers\UserProfileObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         CourseVideo::observe(CourseVideoObserver::class);
         User::observe(UserObserver::class);
+        UserProfile::observe(UserProfileObserver::class);
 
     }
 }

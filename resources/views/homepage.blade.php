@@ -334,6 +334,7 @@
 			<div class="section-area content-inner service-info-bx">
                 <div class="container">
 					<div class="row">
+						@foreach($categories as $category)
 						<div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="service-bx">
 								<div class="action-box">
@@ -343,12 +344,14 @@
 									<div class="feature-box-sm radius bg-white">
 										<i class="fa fa-bank text-primary"></i>
 									</div>
-									<h4><a href="#">Best Industry Leaders</a></h4>
+									<h4><a href="#">{{$category->name}}</a></h4>
+									<p>{{$category->description}}</p>
 									<a href="#" class="btn radius-xl">View More</a>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-4 col-md-4 col-sm-6">
+						@endforeach
+						{{-- <div class="col-lg-4 col-md-4 col-sm-6">
 							<div class="service-bx">
 								<div class="action-box">
 									<img src="assets/images/our-services/pic2.jpg" alt="">
@@ -375,7 +378,7 @@
 									<a href="#" class="btn radius-xl">View More</a>
 								</div>
 							</div>
-						</div>
+						</div> --}}
 					</div>
 				</div>
             </div>

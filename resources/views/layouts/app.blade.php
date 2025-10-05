@@ -53,6 +53,9 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendors/revolution/css/settings.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendors/revolution/css/navigation.css">
 	<!-- REVOLUTION SLIDER END -->	
+	@if(request()->routeIs('dashboard'))
+		<link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/style.css') }}">
+	@endif
 </head>
 <body id="bg">
 	
@@ -78,7 +81,9 @@
 								</select>
 							</li>
 							@if($user)
-							<li><a href="login.html" style="mt-1">{{ $user->name }}</a></li>
+							<li>
+								
+								<a href="{{route('dashboard')}}" style="mt-1"><i class="fa fa-user" style="margin-right:10px;"></i>{{ $user->name }}</a></li>
 							<li>
 								<form method="post" action="{{ route('users.logout') }}">
 									@csrf

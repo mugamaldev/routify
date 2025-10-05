@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,7 +178,14 @@
 								<li><a href="user-profile.html">My profile</a></li>
 								<li><a href="list-view-calendar.html">Activity</a></li>
 								<li><a href="mailbox.html">Messages</a></li>
-								<li><a href="../login.html">Logout</a></li>
+								<li>
+									<a href="{{ route('users.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+										Logout
+									</a>
+									<form id="logout-form" action="{{ route('users.logout') }}" method="POST" style="display: none;">
+										@csrf
+									</form>
+								</li>
 							</ul>
 						</div>
 					</li>
@@ -352,7 +360,8 @@
 							<h4>Teacher Profile</h4>
 						</div>
 						<div class="widget-inner">
-							<form class="edit-profile m-b30">
+							<form class="edit-profile m-b30" method="post" action="{{route('profiles.update')}}">
+								@csrf
 								<div class="row">
 									<div class="col-12">
 										<div class="ml-auto">
@@ -362,26 +371,26 @@
 									<div class="form-group col-6">
 										<label class="col-form-label">Full Name</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->name}}">
+											<input class="form-control" type="text" value="{{$user->profile->full_name}}" name="full_name">
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">Occupation</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->occupation}}">
+											<input class="form-control" type="text" value="{{$user->profile->occupation}}" name="occupation">
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">Company Name</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->company_name}}">
+											<input class="form-control" type="text" value="{{$user->profile->company_name}}" name="company_name">
 											<span class="help">If you want your invoices addressed to a company. Leave blank to use your full name.</span>
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">Phone No.</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->phone}}">
+											<input class="form-control" type="text" value="{{$user->profile->phone}}" name="phone">
 										</div>
 									</div>
 									
@@ -395,13 +404,13 @@
 									<div class="form-group col-6">
 										<label class="col-form-label">Address</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->address}}">
+											<input class="form-control" type="text" value="{{$user->profile->address}}" name="address">
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">City</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->city}}">
+											<input class="form-control" type="text" value="{{$user->profile->city}}" name="city">
 										</div>
 									</div>
 									
@@ -418,29 +427,30 @@
 									<div class="form-group col-6">
 										<label class="col-form-label">Linkedin</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->linkedin}}">
+											<input class="form-control" type="text" value="{{$user->profile->linkedin}}" name="linkedin">
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">Facebook</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->facebook}}">
+											<input class="form-control" type="text" value="{{$user->profile->facebook}}" name="facebook">
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">Twitter</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->twitter}}">
+											<input class="form-control" type="text" value="{{$user->profile->twitter}}" name="twitter">
 										</div>
 									</div>
 									<div class="form-group col-6">
 										<label class="col-form-label">Instagram</label>
 										<div>
-											<input class="form-control" type="text" value="{{$user->profile->instagram}}">
+											<input class="form-control" type="text" value="{{$user->profile->instagram}}" name="instagram">
+											@error('instagram') {{$message}} @enderror
 										</div>
 									</div>
 									<div class="col-12">
-										<button type="reset" class="btn">Save changes</button>
+										<button type="submit" value="submit" class="btn">Save changes</button>
 										<button type="reset" class="btn-secondry">Cancel</button>
 									</div>
 								</div>

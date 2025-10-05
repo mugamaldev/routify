@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory()->count(5)->create();
         $users = User::factory()->count(8)->create();
-        $admin = User::factory()->admin()->create([
+        $instructor = User::factory()->instructor()->create([
             'email' => 'admin@gmail.com',
             'username' => 'admin',
-            'name' => 'Muhammad Admin'
+            'name' => 'Muhammad Gamal'
         ]);
 
         $courses = collect();

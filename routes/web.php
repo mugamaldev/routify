@@ -20,9 +20,10 @@ Route::get('courses', function() {
     return view('new');
 })->name('newhome');
 
-Route::post('logout', [AuthController::class, 'destroy'])->name('users.logout');
 
 Route::get('/dashboard', [DashboardController::class, 'index']);/*->middleware('role:admin, instructor');*/
 Route::middleware(['auth'])->group(function() {
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+  Route::post('/dashboard', [DashboardController::class, 'updateProfile'])->name('profiles.update');
+  Route::post('logout', [AuthController::class, 'destroy'])->name('users.logout');
 });

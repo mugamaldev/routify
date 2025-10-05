@@ -47,4 +47,7 @@ class UserFactory extends Factory
     public function admin() {
         return $this->state(fn(array $attrs) => ['role' => 'admin']);
     }
+    public function instructor() {
+        return $this->state(fn(array $attrs) => ['role' => 'instructor']);
+    }
 }

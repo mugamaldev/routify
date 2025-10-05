@@ -29,6 +29,9 @@ class User extends Authenticatable
         'password',
         'role',
     ];
+    
+    protected $guarded = ['id', 'user_id'];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,7 +56,6 @@ class User extends Authenticatable
             'role' => UserRole::class,
         ];
     }
-
     // helper بسيط
     public function hasRole(UserRole|string $role): bool
     {
@@ -84,10 +86,10 @@ class User extends Authenticatable
         return $this->hasOne(UserProfile::class);
     }
 
-    protected static function boot() {
-        parent::boot();
-        static::created(function ($user) {
-            $user->profile()->create();
-        });
-    }
+    // protected static function boot() {
+    //     parent::boot();
+    //     static::created(function ($user) {
+    //         $user->profile()->create();
+    //     });
+    // }
 }
