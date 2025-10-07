@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Dashboard\DashboardController;
 
@@ -27,3 +28,5 @@ Route::middleware(['auth'])->group(function() {
   Route::post('/dashboard', [DashboardController::class, 'updateProfile'])->name('profiles.update');
   Route::post('logout', [AuthController::class, 'destroy'])->name('users.logout');
 });
+
+Route::get('/courses', [CourseController::class, 'allCourses'])->name('courses.all');

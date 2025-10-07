@@ -2022,6 +2022,12 @@ button.back-to-top {
 	border-radius: 4px;
     overflow: hidden;
 }
+@media(min-width:1100px) {
+	.cours-bx{
+		min-height: 120px;
+		height: 100%;
+	}
+}
 .cours-more-info{
 	border-top: 1px solid #e6e6e6;
 	display: flex;

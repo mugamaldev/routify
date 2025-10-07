@@ -85,7 +85,13 @@ class User extends Authenticatable
     public function profile() {
         return $this->hasOne(UserProfile::class);
     }
-
+    public function getRoleLabelAttribute() {
+        return match(true) {
+            $this->isAdmin() => 'Admin',
+            $this->isInstructor() => 'Instructor',
+            default => 'User',
+        };
+    }
     // protected static function boot() {
     //     parent::boot();
     //     static::created(function ($user) {
