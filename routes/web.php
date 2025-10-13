@@ -20,7 +20,7 @@ Route::post('register', [AuthController::class, 'register'])->name('users.regist
 Route::get('courses', function() {
     return view('new');
 })->name('newhome');
-
+Route::get('course/{id}', [CourseController::class, 'singleCourse']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);/*->middleware('role:admin, instructor');*/
 Route::middleware(['auth'])->group(function() {
