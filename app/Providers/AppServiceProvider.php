@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserProfile;
 use App\Observers\UserObserver;
 use App\Observers\UserProfileObserver;
+use Illuminate\Pagination\Paginator;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         CourseVideo::observe(CourseVideoObserver::class);
         User::observe(UserObserver::class);
         UserProfile::observe(UserProfileObserver::class);
+        Paginator::useBootstrap();
 
     }
 }

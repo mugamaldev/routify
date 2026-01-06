@@ -37,13 +37,13 @@
 								</div>
 							</div>
 							<div class="widget widget_archive">
-                                <h5 class="widget-title style-1">All Courses</h5>
+                                <h5 class="widget-title style-1">All Categories</h5>
                                 <ul>
-                                    <li class="active"><a href="#">General</a></li>
-                                    <li><a href="#">IT & Software</a></li>
-                                    <li><a href="#">Photography</a></li>
-                                    <li><a href="#">Programming Language</a></li>
-                                    <li><a href="#">Technology</a></li>
+									@foreach($categories as $category)
+                                    <li class="active">
+										<a href="#">{{$category->name}}</a>
+									</li>
+									@endforeach
                                 </ul>
                             </div>
 							<div class="widget">
@@ -52,67 +52,79 @@
 							<div class="widget recent-posts-entry widget-courses">
                                 <h5 class="widget-title style-1">Recent Courses</h5>
                                 <div class="widget-post-bx">
-                                    <div class="widget-post clearfix">
-                                        <div class="ttr-post-media"> <img src="assets/images/blog/recent-blog/pic1.jpg" width="200" height="143" alt=""> </div>
-                                        <div class="ttr-post-info">
-                                            <div class="ttr-post-header">
-                                                <h6 class="post-title"><a href="#">Introduction EduChamp</a></h6>
-                                            </div>
-                                            <div class="ttr-post-meta">
-                                                <ul>
-                                                    <li class="price">
-														<del>$190</del>
-														<h5>$120</h5>
-													</li>
-                                                    <li class="review">03 Review</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="widget-post clearfix">
-                                        <div class="ttr-post-media"> <img src="assets/images/blog/recent-blog/pic3.jpg" width="200" height="160" alt=""> </div>
-                                        <div class="ttr-post-info">
-                                            <div class="ttr-post-header">
-                                                <h6 class="post-title"><a href="#">English For Tommorow</a></h6>
-                                            </div>
-                                            <div class="ttr-post-meta">
-                                                <ul>
-                                                    <li class="price">
-														<h5 class="free">Free</h5>
-													</li>
-                                                    <li class="review">07 Review</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+									@foreach($latestCourses as $latest)
+										<div class="widget-post clearfix">
+											<div class="ttr-post-media">
+												{{-- الصورة --}}
+												<img 
+													src="{{ $latest->image ? asset('storage/' . $latest->image) : asset('assets/images/blog/recent-blog/pic1.jpg') }}" 
+													width="200" height="143" 
+													alt="{{ $latest->title }}"
+												>
+											</div>
+
+											<div class="ttr-post-info">
+												<div class="ttr-post-header">
+													<h6 class="post-title">
+														<a href="#">{{ $latest->title }}</a>
+													</h6>
+													{{-- <small class="text-muted">{{ $latest->category->name ?? 'Uncategorized' }}</small> --}}
+												</div>
+
+												<div class="ttr-post-meta">
+													<ul>
+														<li class="price">
+															@if($latest->sale_price)
+																<del>{{ $latest->price }} EGP</del>
+																<h5>{{ $latest->sale_price }} EGP</h5>
+															@else
+																<h5>{{ $latest->price }} EGP</h5>
+															@endif
+														</li>
+
+														{{-- المراجعات --}}
+														<li class="review">
+															{{ $latest->reviews_count ?? 0 }}
+															{{ \Illuminate\Support\Str::plural('Review', $latest->reviews_count ?? 0) }}
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									@endforeach
+								</div>
+
                             </div>
 						</div>
 						<div class="col-lg-9 col-md-8 col-sm-12">
 							<div class="row">
-                                @foreach($courses as $course)
-								<div class="col-md-6 col-lg-4 col-sm-6 m-b30">
-									<div class="cours-bx">
-										<div class="action-box">
-											<img src="assets/images/courses/pic1.jpg" alt="">
-											<a href="#" class="btn">Read More</a>
-										</div>
-										<div class="info-bx text-center">
-											<h5><a href="#">{{$course->title}}</a></h5>
-											<span>{{$course->category->name}}</span>
-                                            <h6>By: {{$course->instructor->name}}</h6>
-										</div>
-										<div class="cours-more-info">
-										<div class="review">
-											<span>
-												{{ $course->reviews_count }} 
-												Review{{ $course->reviews_count == 1 ? '' : 's' }}
-											</span>
+								@forelse($courses as $course)
+									<div class="col-md-6 col-lg-4 col-sm-6 mb-4">
+										<div class="cours-bx">
+											{{-- صورة الكورس --}}
+											<div class="action-box">
+												<img src="{{ $course->image ?? asset('assets/images/courses/pic1.jpg') }}" alt="{{ $course->title }}">
+												<a href="#" class="btn">Read More</a>
+											</div>
 
-											@php
-												// نجيب المتوسط ونقربه لأقرب رقم عشري أو صحيح
-												$avgRating = round($course->reviews_avg_rating, 1); // ممكن تستخدم floor أو ceil حسب ذوقك
-											@endphp
+											{{-- معلومات الكورس --}}
+											<div class="info-bx text-center">
+												<h5><a href="#">{{ $course->title }}</a></h5>
+												<span>{{ $course->category->name ?? 'Uncategorized' }}</span>
+												<h6>By: {{ $course->instructor->name ?? 'Unknown' }}</h6>
+											</div>
+
+											{{-- مراجعات الكورس --}}
+											<div class="cours-more-info">
+												<div class="review">
+													<span>
+														{{ $course->reviews_count }} 
+														{{ \Illuminate\Support\Str::plural('Review', $course->reviews_count) }}
+													</span>
+
+													@php
+														$avgRating = round($course->reviews_avg_rating, 1);
+													@endphp
 
 											<ul class="cours-star">
 												@for ($i = 1; $i <= 5; $i++)
@@ -123,26 +135,22 @@
 											</ul>
 										</div>
 										<div class="price">
-											@if($course->sale_price == 0)
-											<h5>{{$course->price}} EGP</h5>
-											@else
+											@if(!$course->sale_price)
+												<h5>{{ $course->price }} EGP</h5>
+												@else
 											<del>{{$course->price}} EGP</del>
 											<h5>{{$course->sale_price}} EGP</h5>
 											@endif
 										</div>
 									</div>
+								@empty
+									<div class="col-12 text-center py-5">
+										<h4>No courses available right now.</h4>
 									</div>
-								</div>
-                                @endforeach
-								<div class="col-lg-12 m-b20">
+								@endforelse
+								<div class="col-lg-12 mt-4">
 									<div class="pagination-bx rounded-sm gray clearfix">
-										<ul class="pagination">
-											<li class="previous"><a href="#"><i class="ti-arrow-left"></i> Prev</a></li>
-											<li class="active"><a href="#">1</a></li>
-											<li><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-											<li class="next"><a href="#">Next <i class="ti-arrow-right"></i></a></li>
-										</ul>
+										{{ $courses->links() }}
 									</div>
 								</div>
 							</div>
