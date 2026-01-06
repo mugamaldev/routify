@@ -47,14 +47,15 @@
 	<!-- STYLESHEETS ============================================= -->
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
-	
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body id="bg">
 <div class="page-wraper">
 	<div id="loading-icon-bx"></div>
 	<div class="account-form">
 		<div class="account-head" style="background-image:url(assets/images/background/bg2.jpg);">
-			<a href="index.html"><img src="assets/images/logo-white-2.png" alt=""></a>
+			<a href="{{route ('myhome')}}"><img src="assets/images/logo-white-2.png" alt=""></a>
 		</div>
 		<div class="account-form-inner">
 			<div class="account-container">
@@ -62,14 +63,15 @@
 					<h2 class="title-head">Login to your <span>Account</span></h2>
 					<p>Don't have an account? <a href="{{ route('regist') }}">Create one here</a></p>
 				</div>	
-				<form class="contact-bx" method="post" action="{{ route('users.login') }}">
+				<div id="error" style="padding-bottom:20px;margin-bottom:10px;"></div>
+				<form class="contact-bx" method="post" id="loginForm">
                     @csrf
 					<div class="row placeani">
 						<div class="col-lg-12">
 							<div class="form-group">
 								<div class="input-group">
 									<label>Your Name</label>
-									<input name="dzName" type="text" required="" class="form-control">
+									<input name="dzName" type="text" required="" class="form-control" value="{{ old('dzName') }}">
                                     @error('dzName')<div style="color:red;">{{ $message }} @enderror
 								</div>
 							</div>
@@ -88,7 +90,7 @@
 									<input type="checkbox" class="custom-control-input" id="customControlAutosizing">
 									<label class="custom-control-label" for="customControlAutosizing">Remember me</label>
 								</div>
-								<a href="forget-password.html" class="ml-auto">Forgot Password?</a>
+								<a href="#" class="ml-auto">Forgot Password?</a>
 							</div>
 						</div>
 						<div class="col-lg-12 m-b30">
@@ -107,7 +109,44 @@
 		</div>
 	</div>
 </div>
+
 <!-- External JavaScripts -->
+<script>
+document.getElementById('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const form = e.target;
+    const errorBox = document.getElementById('error');
+
+    errorBox.innerText = '';
+
+    try {
+        const res = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': form.querySelector('input[name=_token]').value,
+                'Accept': 'application/json'
+            },
+            body: new FormData(form)
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+            errorBox.innerText = json.message ?? 'Login failed';
+            return;
+        }
+
+        if (json.success) {
+            window.location.href = json.redirect;
+        }
+    } catch (err) {
+        errorBox.innerText = 'Unexpected error, please try again.';
+        console.error(err);
+    }
+});
+</script>
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/vendors/bootstrap/js/popper.min.js"></script>
 <script src="assets/vendors/bootstrap/js/bootstrap.min.js"></script>

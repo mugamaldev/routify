@@ -43,25 +43,44 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
-        $creds = $request->validate([
-            'dzName' => ['required', 'string', 'exists:users,username'],
-            'dzPassword' => ['required', 'string', 'min:8'],
+        // $creds = $request->validate([
+        //     'dzName' => ['required', 'string', 'exists:users,username'],
+        //     'dzPassword' => ['required', 'string', 'min:8'],
+        // ]);
+
+        // $credentials = [
+        //     'username' => $creds['dzName'],
+        //     'password' => $creds['dzPassword'],
+        // ];
+
+
+        // if(Auth::attempt($credentials)) {
+        //     $request->session()->regenerate();
+
+        //     return redirect()->intended(route('myhome'));
+        // }
+
+        // return back()->withErrors(['dzName' => __('The provided credentials do not match our records.')])->withInput($request->only('dzName'));
+        $credentials = $request->validate([
+            'dzName' => ['required', 'string'],
+            'dzPassword' => ['required', 'string'],
         ]);
-
-        $credentials = [
-            'username' => $creds['dzName'],
-            'password' => $creds['dzPassword'],
-        ];
-
-
-        if(Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('myhome'));
+        if(! Auth::attempt([
+            'username' => $credentials['dzName'],
+            'password' => $credentials['dzPassword'],
+        ])) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Invalid username or password'),
+            ], 422);
         }
 
-        return back()->withErrors(['dzName' => __('The provided credentials do not match our records.')])->withInput($request->only('dzName'));
+        $request->session()->regenerate();
 
+        return response()->json([
+            'success' => true,
+            'redirect' => route('myhome'),
+        ]);
     }
 
     public function destroy() {

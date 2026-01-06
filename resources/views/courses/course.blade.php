@@ -123,8 +123,12 @@
 											</ul>
 										</div>
 										<div class="price">
+											@if($course->sale_price == 0)
+											<h5>{{$course->price}} EGP</h5>
+											@else
 											<del>{{$course->price}} EGP</del>
 											<h5>{{$course->sale_price}} EGP</h5>
+											@endif
 										</div>
 									</div>
 									</div>

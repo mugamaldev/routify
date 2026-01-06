@@ -53,13 +53,13 @@
 	<div id="loading-icon-bx"></div>
 	<div class="account-form">
 		<div class="account-head" style="background-image:url({{ asset('assets/images/background/bg2.jpg')}});">
-			<a href="index.html"><img src="assets/images/logo-white-2.png" alt=""></a>
+			<a href="{{route ('myhome')}}"><img src="assets/images/logo-white-2.png" alt=""></a>
 		</div>
 		<div class="account-form-inner">
 			<div class="account-container">
 				<div class="heading-bx left">
 					<h2 class="title-head">Sign Up <span>Now</span></h2>
-					<p>Login Your Account <a href="login.html">Click here</a></p>
+					<p>Login Your Account <a href="{{ route('login') }}">Click here</a></p>
 				</div>	
 				<form class="contact-bx" method="post" action="{{ route('users.regist') }}">
 					@csrf
@@ -68,7 +68,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<label>Your Name</label>
-									<input name="dzName" type="text" required="" class="form-control">
+									<input name="dzName" type="text" required="" class="form-control" value="{{ old('dzName') }}">
 									@error('dzName') <div style="color:red;margin-top:5px;margin-bottom:5px;">Must be not empty</div>@enderror
 								</div>
 							</div>
@@ -77,7 +77,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<label>Your Username</label>
-									<input name="dzUsername" type="text" required="" class="form-control" autocomplete="off">
+									<input name="dzUsername" type="text" required="" class="form-control" autocomplete="off" value="{{ old('dzUsername') }}">
 									@error('dzUsername') <div style="color:red;margin-top:5px;margin-bottom:5px;">Must be not empty</div>@enderror
 								</div>
 							</div>
@@ -86,7 +86,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<label>Your Email Address</label>
-									<input name="dzEmail" type="email" required="" class="form-control">
+									<input name="dzEmail" type="email" required="" class="form-control" value="{{ old('dzEmail') }}">
 									@error('dzEmail') <div style="color:red;margin-top:5px;margin-bottom:5px;">Must be not empty</div>@enderror
 									
 								</div>
